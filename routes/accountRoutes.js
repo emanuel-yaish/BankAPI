@@ -8,6 +8,9 @@ router
   .get(userController.getAllAccounts)
   .post(userController.addAccount);
 
-// router.route("/:accountID").get(getAccount).put(handleAccountAction);
+router
+  .route("/:accountID")
+  .get(userController.getAccount)
+  .put(userController.handleAccountAction);
 
 module.exports = router;

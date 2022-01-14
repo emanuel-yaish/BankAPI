@@ -1,5 +1,9 @@
 const welcome = (req, res) => {
-  res.status(200).send("Welcome to Bank API");
+  try {
+    res.status(200).send("Welcome to Bank API");
+  } catch (e) {
+    res.status(400).send({ error: e.message });
+  }
 };
 
 module.exports = {
