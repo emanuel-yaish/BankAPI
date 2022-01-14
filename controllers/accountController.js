@@ -27,17 +27,19 @@ const getAllAccounts = (req, res) => {
 };
 
 const addAccount = (req, res) => {
-  const { passportID, cash, credit } = req.body;
+  console.log(req.body);
+  const { passportid, cash, credit } = req.body;
   const accounts = loadAccounts();
-  const account = accounts.find((account) => (account.passportid = passportID));
+  const account = accounts.find((account) => account.passportid === passportid);
   if (account) throw Error("Account is already exist!");
 
-  cash = cash === "" ? 0 : cash;
-  credit = credit === "" ? 0 : credit;
-
-  const newAccount = { passportid: passportID, cash, credit };
+  const newAccount = {
+    passportid,
+    cash: cash === "" ? 0 : cash,
+    credit: credit === "" ? 0 : credit,
+  };
   accounts.push(newAccount);
-  saveAccounts(users);
+  saveAccounts(accounts);
 
   res.status(200).json({
     status: "success",
