@@ -1,0 +1,23 @@
+{
+  "name": "bankapi",
+  "version": "1.0.0",
+  "description": "implementation of Bank api in the backend ",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emanuel-yaish/BankAPI.git"
+  },
+  "author": "Emanuel Yaish",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emanuel-yaish/BankAPI/issues"
+  },
+  "homepage": "https://github.com/emanuel-yaish/BankAPI#readme"
+}
