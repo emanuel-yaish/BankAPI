@@ -104,9 +104,14 @@ const withdraw = (accountId, withdrowAmount, res) => {
 
   const account = accounts.find((account) => account.passportid === accountId);
 
-  if (!account) throw Error("Account not found!");
+  if (!account) throw Error("account not found!");
 
-  account.cash -= withdrowAmount;
+  console.log(+account.credit);
+
+  if (+account.credit + +account.cash < +withdrowAmount)
+    throw Error("insufficient funds!");
+
+  account.cash = (+account.cash - +withdrowAmount).toString();
 
   saveAccounts(accounts);
 
@@ -130,8 +135,11 @@ const transfer = (accountId, reciverAccontID, transferAmmount, res) => {
   );
   if (!reciverAccount) throw Error("Account not found!");
 
-  account.cash -= transferAmmount;
-  reciverAccount.cash += transferAmmount;
+  if (+account.credit + +account.cash < +transferAmmount)
+    throw Error("insufficient funds for transferring!");
+
+  account.cash = (+account.cash - +transferAmmount).toString();
+  reciverAccount.cash = (+reciverAccount.cash + +transferAmmount).toString();
 
   saveAccounts(accounts);
 
@@ -155,28 +163,28 @@ const handleAccountAction = (req, res) => {
     switch (action) {
       case "deposit":
         const depositAmount = actionData.depositAmount;
-        if (depositAmount <= 0)
+        if (!depositAmount || depositAmount <= 0)
           throw Error(`invalid deposit ammount - ${depositAmount}`);
         deposit(accountId, depositAmount, res);
         break;
 
       case "updateCredit":
         const newCreditAmmount = actionData.newCreditAmmount;
-        if (newCreditAmmount < 0)
+        if (!newCreditAmmount || newCreditAmmount < 0)
           throw Error(`invalid new credit ammount - ${newCreditAmmount}`);
         updateCredit(accountId, newCreditAmmount, res);
         break;
 
       case "withdraw":
         const withdrawAmmount = actionData.withdrawAmmount;
-        if (withdrawAmmount <= 0)
-          throw Error(`invalid withdraw ammount - ${withdraw}`);
+        if (!withdrawAmmount || withdrawAmmount <= 0)
+          throw Error(`invalid withdraw ammount - ${withdrawAmmount}`);
         withdraw(accountId, withdrawAmmount, res);
         break;
 
       case "transfer":
         const transferAmmount = actionData.transferAmmount;
-        if (transferAmmount <= 0)
+        if (!transferAmmount || transferAmmount <= 0)
           throw Error(`invalid transfer ammount - ${transferAmmount}`);
 
         const reciverAccontID = actionData.reciverAccontID;
