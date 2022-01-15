@@ -30,7 +30,7 @@ amount of cash)
 
 using - PUT /:passportid
 
-````javascript
+```javascript
 {
     "action": "depositing",
     "actionData": {"depositingAmmount": "50",
@@ -48,7 +48,7 @@ using - PUT /:passportid
     "action": "updateCredit",
     "actionData": {"creditAmmount": "50",
 }
-````
+```
 
 ### Withdraw money
 
