@@ -35,6 +35,7 @@ using - PUT /:passportid
     "action": "depositing",
     "actionData": {"depositingAmmount": "50",
 }
+```
 
 ### Update credit
 
